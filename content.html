@@ -1,0 +1,51 @@
+<input id="dummybox" />
+<div id="game">
+	 <canvas id="cv" width="600" height="500"></canvas>
+	 <div id="pause">
+		<span class="header">Paused</span>
+		<input class="resume" value="Resume" onClick="if (!(!B.paused && B.dead)) {B.dead = B.paused = !B.paused;}" type="button" />
+		<input class="option" value="Options" onClick="showOptionMenu();" type="button" />
+		<input class="return" value="Menu" onClick="if (vis.game && B.paused&&confirm('Are you sure you want to\nreturn to the main menu?')) {$('#pause').css('display','none');hideGame(showSel);}" type="button" />
+		<input class="qsave" value="Quick Save" onClick="quickSave();" type="button" />
+	 </div>
+</div>
+<div id="mm_background"></div>
+<div id="mm">
+	<img src="img/title.png" style="position:absolute;left:84px;top:50px;" />
+	<img class="menuimg start" src="img/start.png" onclick="hideMenu(showSel);" />
+	<img class="menuimg achievements" src="img/achievements.png" onclick="showAchMenu()" />
+	<img class="menuimg options" src="img/options.png" onclick="showOptionMenu()" />
+	<div id="credits">
+		A game by
+		<a id="rl" target="_blank" href="http://tablocks.com/resume">Roger Li</a><span id="rl_"></span>
+		and
+		<span id="si_"></span><span id="si">Steven Ionov</span>
+	</div>
+</div>
+<div id="sel">
+	<canvas id="selcv" width="600" height="500"></canvas>
+	<div id="chal">
+		<h3>Challenges</h3>
+		<div class="box"></div>
+		<div class="x" onClick="$(this).parent().animate({opacity:0},500,function(){$(this).css('display','none');});challengesopen=false;">[x]</div>
+	</div>
+</div>
+<div id="options">
+	<div id="cover"></div>
+	<canvas width="400" height="400"></canvas>
+</div>
+<div id="ach">
+	<div id="cover"></div>
+	<canvas width="500" height="400"></canvas>
+	<div class="ach">
+		<h3>Achievements</h3>
+		<div class="all" mask="1">All</div>
+		<div class="f" mask="2"></div>
+		<div class="unf" mask="3"></div>
+		<div class="box"></div>
+		<div class="x" onClick="$(this).parent().parent().animate({opacity:0},500,function(){$(this).css('display','none');});">[x]</div>
+	</div>
+</div>
+
+
+<span id="d" style="z-index:99999; position:absolute; bottom:3; left:3;"></span>

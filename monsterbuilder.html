@@ -1,0 +1,113 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Swarm Monster Builder</title>
+		<script src="jce2.js"></script>
+		<script src="rooms.js"></script>
+		<script src="monsters.js"></script>
+		<script src="sound.js"></script>
+    </head>
+    <body style="padding:0;margin:0;">
+    	
+        <input type="button" value="Setup Rooms" onClick="setup()" style="position:absolute; top:410;left:610;">
+        <textarea style="position:absolute;left:600;top:0;width:540px;height:400;"></textarea>
+<div style="position:absolute;background:#00f;top:0;left:250;width:100;height:5;z-index:10;"></div>
+<div style="position:absolute;background:#00f;top:397;left:250;width:100;height:5;z-index:10;"></div>
+<div style="position:absolute;background:#00f;top:150;left:0;width:5;height:100;z-index:10;"></div>
+<div style="position:absolute;background:#00f;top:150;left:597;width:5;height:100;z-index:10;"></div>
+<canvas id="cv" style="position:absolute; top:0; left:0;z-index:8;" width="600" height="400"></canvas>
+<div style="position:absolute; top:408; left:5; font-family:monospace;" id="sel"></div>
+    	<script>function rab(a,b) {return a+Math.random()*(b-a);}
+			
+var w = [0,1,2,3,4,5,6,7,8,9,10,11];
+var h = [0,1,2,3,4,5,6,7];
+var g = new canvas("cv");
+var m = [];
+B = {diff:0};
+$(window).click(function(e) {
+	mx = e.pageX;
+	my = e.pageY;
+	if (mx < 600 && my < 400) {
+		sp = $('span[active="true"]');
+		mons = sp.text();
+		m.push([mons,mx,my,Monster[mons](mx,my)]);
+		
+	}
+});
+$(window).keydown(function(e) {
+	key = e.keyCode ? e.keyCode : e.which;
+	if (key == 13) {
+		setup();
+		e.preventDefault();
+		return false;
+	}
+});
+
+function draw() {
+	g.clearRect(0,0,600,400);
+	
+	for(i in m) {
+		m[i][3].draw(g);
+	}
+	
+	
+} setInterval(draw,25);
+
+
+function setup() {
+	ns = "[";
+	var t = {};
+	for(i in m) {
+		type = m[i][0];
+		x = m[i][1];
+		y = m[i][2];
+		if (!t[type]) {t[type] = [];}
+		t[type].push(x);
+		t[type].push(y);
+	}
+	for(i in t) {
+		if (ns != "[") ns += ",";
+		ns += "['"+i+"'";
+		for(var j=0;j<t[i].length;j+=2) {
+			ns += ","+t[i][j]+","+t[i][j+1];
+		}
+		ns += "]"
+	}
+	ns += "]";
+	$('textarea').val(ns);
+	$('textarea')[0].select();
+}
+
+
+brcount = 0;
+for(i in Monster) {
+	try {
+		if (Monster[i]().boss !== true) {
+			$('#sel').append(((brcount++>7)?((function(){brcount=0;return "<br>";})()):"")+
+				"&nbsp;&nbsp;<span active='"+(i=="fly"?true:false)+"' style='"+(i=="fly"?"color:#00f;":"colof:#000;")+"cursor:pointer;' onclick=\""+
+				"$('span').css('color','#000').attr('active',false);$(this).css('color','#00f').attr('active',true);\">"+i+"</span>&nbsp;");
+			
+		}
+	} catch(e) {}
+}
+for(i in w) {
+	for(j in h) {
+		$('body').append("<div id='b"+i+"-"+j+"' style='background:#aaa;position:absolute;width:50;height:50;border:1px solid black;"+
+			"left:"+(i*50)+";top:"+(j*50)+"'></div>");
+		
+	}
+}
+		</script>
+        
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+

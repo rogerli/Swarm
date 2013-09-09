@@ -1,0 +1,126 @@
+<!--
+	Swarm v1.10
+    Roger Li (c) 2013
+-->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta name="description" content="Swarm - a nonstop, addictive game" />
+		<meta name="keywords" content="Swarm Tablocks Game HTML Javascript CSS JQuery Web Technology Website" />
+		<title>Swarm</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+	<body>
+		<div id="container"></div>
+	<div id="preloader">
+			<div id="prebox">
+				<span class="swarm">SWARM</span>
+				<br><br>
+				<div id="loadfly"></div>
+				<br><br>
+				<div id="loadbar">
+					<div id="loadbar2"></div>
+					<span id="loadtext">Loading Content</span>
+				</div>
+			</div>
+		</div>
+    	<script>
+			var preload = true;
+			var browserh = Math.max(document.documentElement.clientHeight,
+				document.body.scrollHeight, document.documentElement.scrollHeight,
+				document.body.offsetHeight, document.documentElement.offsetHeight);
+			function getXMLHttp() {var xmlHttp; try { xmlHttp = new XMLHttpRequest(); }catch(e) { try { xmlHttp = new ActiveXObject("Msxml2.XMLHTTP"); }catch(e) { try { xmlHttp = new ActiveXObject("Microsoft.XMLHTTP"); }catch(e) { alert("Your browser does not support AJAX!"); return false; }} } return xmlHttp; }
+			var JS = ["jce","sound","transition","events","resize","data","unlock","game","rooms","monsters","maps","weapons","items","sel","options", "i"];
+			function loadJS(ind) {
+				document.getElementById("loadbar2").style.width = 450 * ind / JS.length;
+				if (ind >= JS.length) {
+					document.getElementById("loadtext").innerHTML = "Loading Images";
+					window.Images = {};
+					loadIMG(0);
+					return;
+				}
+				var req = getXMLHttp();
+				req.open("GET","js/"+JS[ind]+".js",true);
+				req.onreadystatechange = function() {
+					if (req.readyState == 4) {
+						if (req.status == 200) {
+							var sc = document.createElement('script');
+							sc.type = "text/javascript";
+							sc.text = req.responseText;
+							document.getElementsByTagName("head")[0].appendChild(sc);
+							loadJS(ind+1);
+						}
+					}
+				}
+				req.send(null);
+			}
+			window.onload = function() {
+				document.getElementById("prebox").style.top = browserh/2 - 150;
+				var req = getXMLHttp();
+				req.open("GET","content.html",true);
+				req.onreadystatechange = function() {
+					if (req.readyState == 4) {
+						if (req.status == 200) {
+							document.getElementById("container").innerHTML = req.responseText;
+							document.getElementById("loadtext").innerHTML = "Loading Game Library";
+							loadJS(0);
+						}
+					}
+				}
+				req.send(null);
+				for(var i=0;i<totflies;i++)
+					document.getElementById("loadfly").innerHTML += "<img id=\"prefly"+i+"\" src=\"img/loadingfly.png\" />";
+				revFlies();
+			}
+			function loadIMG(ind) {
+				document.getElementById("loadbar2").style.width = 450 * ind / imgs.length;
+				if (ind >= imgs.length) {
+					document.getElementById("loadtext").innerHTML = "Loading Complete!";
+					preload = false;
+					$("#preloader").animate({
+						opacity:0
+					},500,function() {$(this).css("display","none");});
+					waitForSoundM();
+					return;
+				}
+				Images[imgs[ind][0]] = new Image();
+				Images[imgs[ind][0]].onload = function() {
+					loadIMG(ind+1);
+				}
+				Images[imgs[ind][0]].src = "img/"+imgs[ind][1]+".png";
+			}
+			var totflies = 5, preflies = 0, preflys = 45;
+			function revFlies() {
+				preflies += Math.PI/60;
+				for(var i=0;i<totflies;i++) {
+					var preang = preflies + Math.PI*2*i/totflies;
+					var flyx = (Math.cos(preang)/2+0.5)*preflys,
+						flyy = (Math.sin(preang)/2+0.5)*preflys;
+					document.getElementById("prefly"+i).style.left=flyx-7.5;
+					document.getElementById("prefly"+i).style.top=flyy-7.5;
+				}
+				setTimeout(revFlies,25);
+			}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

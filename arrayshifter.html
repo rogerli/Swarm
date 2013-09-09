@@ -1,0 +1,54 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Array Shifter</title>
+		<script src="jce2.js"></script>
+    </head>
+    <body style="padding:0;margin:0;">
+    	
+        <input id="n" style="position:absolute; top:410;left:70;">
+        <input type="button" value="Shift" onClick="shifta()" style="position:absolute; top:410;left:10;width:50;">
+        <textarea id="t1" style="position:absolute;left:0;top:0;width:500px;height:400;"></textarea>
+        <textarea id="t2" style="position:absolute;left:500;top:0;width:500px;height:400;"></textarea>
+    	<script>
+function shifta() {
+	tt = $('#t1').val().split("\n");
+	$('#t2').html("");
+	sh = parseInt($('#n').val());
+	for(i in tt) {
+		t = tt[i];
+		l = tt[i].split("");
+		startn = 0;
+		for(var j=0;j<l.length;j++) {
+			if (!isNaN(parseInt(l[j]))) {
+				startn = j;
+				break;
+			}
+		}
+		endn = startn;
+		for(var j=startn;j<l.length;j++) {
+			if (isNaN(parseInt(l[j]))) {
+				endn = j;
+				break;
+			}
+		}
+		cn = parseInt(t.substring(startn,endn));
+		if (i != 0) $("#t2").append("\n");
+		$('#t2').append(t.replace(cn+" :",(cn+sh)+" :"));
+		
+	}
+}
+		</script>
+        
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+

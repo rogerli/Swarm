@@ -1,0 +1,134 @@
+<!--
+	Swarm v1.10
+    Roger Li (c) 2013
+-->
+<!--
+	TO-DO LIST
+	room icons
+	powerup list thing
+	challenge room don't spawn on you
+	more health powerups
+	MONSTERS
+		fly flinger
+		popper that flys onto you
+		brain
+		variations of telefly
+		knights
+		diggers - follow you but dig down and tele occasionally
+		diggers - same but shoot
+		blobs that break down into smaller monsters
+		blob - aimlessly wander and shoot
+		laser shooter
+	BOSSES
+		surgeon
+		bomb targeting
+		frag queen
+		fly whisperer (flies surrounding boss)
+		-charges across room, may have many copies charging
+-->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta name="description" content="Swarm - a nonstop, addictive game" />
+		<meta name="keywords" content="Swarm Tablocks Game HTML Javascript CSS JQuery Web Technology Website" />
+		<title>Swarm</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+	<body>
+    	<input id="dummybox" />
+		<div id="game">
+        	 <canvas id="cv" width="600" height="500"></canvas>
+             <div id="pause">
+             	<span class="header">Paused</span>
+                <input class="resume" value="Resume" onClick="if (!(!B.paused && B.dead)) {B.dead = B.paused = !B.paused;}" type="button" />
+                <input class="option" value="Options" onClick="showOptionMenu();" type="button" />
+                <input class="return" value="Menu" onClick="if (vis.game && B.paused&&confirm('Are you sure you want to\nreturn to the main menu?')) {$('#pause').css('display','none');hideGame(showSel);}" type="button" />
+                <input class="qsave" value="Quick Save" onClick="quickSave();" type="button" />
+             </div>
+        </div>
+		<div id="mm_background"></div>
+		<div id="mm">
+            <img src="img/title.png" style="position:absolute;left:84px;top:50px;" />
+            <img class="menuimg start" src="img/start.png" onClick="hideMenu(showSel);" />
+            <img class="menuimg achievements" src="img/achievements.png" onClick="showAchMenu()" />
+            <img class="menuimg options" src="img/options.png" onClick="showOptionMenu()" />
+            <div id="credits">
+            	A game by
+                <a id="rl" target="_blank" href="http://tablocks.com/resume">Roger Li</a><span id="rl_"></span>
+                and
+                <span id="si_"></span><span id="si">Steven Ionov</span>
+            </div>
+		</div>
+		<div id="sel">
+			<canvas id="selcv" width="600" height="500"></canvas>
+			<div id="chal">
+				<h3>Challenges</h3>
+				<div class="box"></div>
+				<div class="x" onClick="$(this).parent().animate({opacity:0},500,function(){$(this).css('display','none');});challengesopen=false;">[x]</div>
+			</div>
+		</div>
+        <div id="options">
+        	<div id="cover"></div>
+            <canvas width="400" height="400"></canvas>
+        </div>
+        <div id="ach">
+        	<div id="cover"></div>
+            <canvas width="500" height="400"></canvas>
+			<div class="ach">
+				<h3>Achievements</h3>
+				<div class="all" mask="1">All</div>
+				<div class="f" mask="2"></div>
+				<div class="unf" mask="3"></div>
+				<div class="box"></div>
+				<div class="x" onClick="$(this).parent().parent().animate({opacity:0},500,function(){$(this).css('display','none');});">[x]</div>
+			</div>
+        </div>
+        
+        
+        <span id="d" style="z-index:99999; position:absolute; bottom:3; left:3;"></span>
+		
+		
+		
+		<script src="js/jce.js"></script>
+		<script>testing = 1, _tr_ = 0, skiproom = 0;
+		_st = 1.5;
+if (testing) _st = 40;;</script>
+		<script src="js/i.js"></script>
+		<script src="js/transition.js"></script>
+		<script src="js/sound.js"></script>
+		<script src="js/events.js"></script>
+		<script src="js/data.js"></script>
+		<script src="js/unlock.js"></script>
+		<script src="js/game.js"></script>
+		<script src="js/rooms.js"></script>
+		<script src="js/monsters.js"></script>
+		<script src="js/maps.js"></script>
+		<script src="js/weapons.js"></script>
+		<script src="js/items.js"></script>
+		<script src="js/resize.js"></script>
+		<!--<script src="js/startup.js"></script>-->
+		<script src="js/sel.js"></script>
+		<script src="js/options.js"></script>
+		<script src="js/local.js"></script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
